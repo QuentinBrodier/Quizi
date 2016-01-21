@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }}Les Quiz's{% endblock %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+{% endblock %}
+
+
+{% block body %}
+
+    {{ parent() }}
+
+    <div class="container">
+        <h1>Error</h1>
+       <div class="card-panel">
+           <h4>{{ exception.message }}</h4>
+       </div>
+    </div>
+
+{% endblock %}

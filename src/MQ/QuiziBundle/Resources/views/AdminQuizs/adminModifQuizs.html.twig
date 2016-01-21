@@ -1,0 +1,166 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ parent() }}Modification Quiz{% endblock %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+{% endblock %}
+
+
+{% block body %}
+
+    {{ parent() }}
+
+    <div class="container">
+
+
+        {% for message in app.session.flashbag.get('info') %}
+
+            <div class="row">
+                <div class="col s12 i12 d12">
+                    <div class="card-panel green lighten-2">
+                        <h5 class="white-text">{{ message }}</h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        {% for message in app.session.flashbag.get('infoError') %}
+
+            <div class="row">
+                <div class="col s12 i12 d12">
+                    <div class="card-panel red lighten-2">
+                        <h5 class="white-text">{{ message }}</h5>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        <br>
+        <h4 class="black-text">Modifier un quiz</h4>
+        <br>
+
+        <!-- Si il existe une erreur, on l'affiche -->
+
+
+
+
+        <ul class="collapsible" data-collapsible="expandable">
+
+            <!-- Informations du quiz -->
+            <li>
+                <div class="collapsible-header grey lighten-4"><i class="material-icons">description</i>Informations du Quiz</div>
+                <div class="collapsible-body">
+
+                    <div class="section">
+
+                        {{ form_start(form) }}
+                        <h6>Nom du Quiz *</h6>
+                        {{ form_widget(form.nomQuiz) }}
+
+                        <h6>Type d'afichage de résultat *</h6>
+
+                        <div class="center">
+                            {{ form_widget(form.affichageFinal) }}
+                            <br>
+                            {{ form_row(form.btnModifInfoQuiz) }}<br>
+                        </div>
+
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </li>
+
+
+
+
+            <!-- Liste des questions du quiz -->
+            <li>
+                <div class="collapsible-header grey lighten-4"><i class="material-icons">list</i>Liste des questions du quiz</div>
+                <div class="collapsible-body">
+
+                    <ul class="collection">
+
+
+                        {% for question in listQuestions %}
+
+                            <li class="collection-item">
+                                <div>
+                                    {{ question.titreQuestion|raw }}
+                                    <a href="{{ path('mq_quizi_suppr_questions_quizs',{'idQuiz' : quiz.id, 'idQuestion' : question.id}) }}" class="secondary-content" onclick="return confirm('Etes vous sûr de vouloir supprimer cette question ?')"><i class="material-icons">delete</i></a>
+                                    <a href="{{ path('mq_quizi_modif_questions_quizs',{'idQuiz' : quiz.id, 'idQuestion' : question.id}) }}" class="secondary-content"><i class="material-icons">mode_edit</i></a>
+                                </div>
+                            </li>
+
+                        {% endfor %}
+
+
+                    </ul>
+
+                </div>
+            </li>
+
+
+            <!-- Ajouter une question -->
+            <li>
+                <div class="collapsible-header grey lighten-4"><i class="material-icons">add_circle</i>Ajouter une question</div>
+                <div class="collapsible-body">
+
+                    {{ form_start(form2) }}
+                    <br>
+                    <h6>Nom de la Question *</h6>
+                    {{ form_widget(form2.nomQuestion) }}
+
+                    <div class="row">
+
+                        <div class=" col s12 m6">
+                            <h6>Réponse 1 *</h6>
+                            {{ form_widget(form2.rep1) }}
+                        </div>
+
+                        <div class=" col s12 m6">
+                            <h6>Réponse 2 *</h6>
+                            {{ form_widget(form2.rep2) }}
+                        </div>
+
+                        <div class=" col s12 m6">
+                            <h6>Réponse 3</h6>
+                            {{ form_widget(form2.rep3) }}
+                        </div>
+
+                        <div class=" col s12 m6">
+                            <h6>Réponse 4</h6>
+                            {{ form_widget(form2.rep4) }}
+                        </div>
+
+                    </div>
+
+                    <div class="center">
+
+                        <h6>Quel est la réponse correcte ? *</h6>
+                        {{ form_widget(form2.reponseCorrect) }}
+
+                    </div>
+                    <br>
+                    <h6 class="center thin">* : champs obligatoires</h6>
+
+                    <div class="center">
+
+                        <br>{{ form_row(form2.btnAddQuestion) }}<br>
+
+                    </div>
+
+
+                    {{ form_end(form2) }}
+                </div>
+            </li>
+        </ul>
+
+
+
+
+    </div>
+
+{% endblock %}

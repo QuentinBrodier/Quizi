@@ -1,0 +1,44 @@
+mq_user:
+    resource: "@MQUserBundle/Resources/config/routing.yml"
+    prefix: /
+
+mq_quizi:
+    resource: "@MQQuiziBundle/Resources/config/routing.yml"
+    prefix: /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type: annotation
+
+login:
+    path: /login
+    defaults: { _controller: MQUserBundle:Security:login }
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout
+
+inscription:
+    path: /inscription
+    defaults: { _controller: MQUserBundle:Security:inscription }
+    methods: [POST]
+
+gestion_user:
+    path: /gestion_utilisateur
+    defaults: { _controller: MQUserBundle:Security:gestionUser}
+
+delete_user:
+    path: /delete_utilisateur/{id}
+    defaults: { _controller: MQUserBundle:Security:deleteUser}
+
+pageNotFound:
+    pattern:  /{path}
+    defaults: { _controller: AppBundle:PageNotFound:pageNotFound, path: '' }
+    requirements:
+        path: .*
+
+_errors:
+    resource: "@TwigBundle/Resources/config/routing/errors.xml"
+    prefix:   /_error

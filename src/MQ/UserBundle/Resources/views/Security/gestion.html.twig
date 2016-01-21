@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }}Accueil{% endblock %}
+
+{% block stylesheets %}
+
+    {{ parent() }}
+
+{% endblock %}
+
+{% block body %}
+
+    {{ parent() }}
+
+    <div class="container">
+
+        <br>
+        <h4 class="black-text">Administration des User's</h4>
+        <br>
+        <div class="divider"></div>
+
+        <table>
+            <thead>
+            <tr>
+                <th data-field="id">ID</th>
+                <th data-field="name">Login</th>
+                <th data-field="email">Mail</th>
+                <th data-field="role">Role</th>
+                <th data-field="supprimer">Supprimer</th>
+            </tr>
+            </thead>
+
+
+            <!-- Modal Structure -->
+
+            <tbody>
+
+            {% for user in users %}
+                {% if user.roles[0] == "ROLE_USER"%}
+
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.mail }}</td>
+                        <td>{{ user.roles[0] }}</td>
+                        <td><a class="waves-effect waves-light btn modal-trigger" href="{{ path('delete_user', {'id': user.id}) }}"
+                               onclick="return confirm('Etes vous sûr de vouloir supprimer cet utilisateur')" >Supprimer</a></td>
+                    </tr>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+            </tbody>
+
+        </table>
+
+
+    </div>
+
+{% endblock %}
